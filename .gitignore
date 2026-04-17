@@ -2,3 +2,4 @@
 .dvc
 __pycache__
 mlruns/
+!.dvc
