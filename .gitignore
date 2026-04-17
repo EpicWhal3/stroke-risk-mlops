@@ -1,0 +1,4 @@
+.venv
+.dvc
+__pycache__
+mlruns/
