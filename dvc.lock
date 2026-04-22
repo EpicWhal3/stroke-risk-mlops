@@ -1,0 +1,66 @@
+schema: '2.0'
+stages:
+  preprocess:
+    cmd: python src/data/preprocess.py
+    deps:
+    - path: data/raw/stroke_dataset.csv
+      hash: md5
+      md5: cd1e273722909fe70ab351966c10a639
+      size: 8133
+    - path: src/data/preprocess.py
+      hash: md5
+      md5: 11a37cfac3a1be0eebad3af45f82b039
+      size: 1936
+    outs:
+    - path: data/processed/X_test.npy
+      hash: md5
+      md5: 3470762f4499feeaae0bccb89cf132e8
+      size: 2832
+    - path: data/processed/X_train.npy
+      hash: md5
+      md5: 4030a7eef8bd47b35df08ac9bd6aac89
+      size: 10528
+    - path: data/processed/y_test.npy
+      hash: md5
+      md5: 4980048df707ecfeac23c7449ddbb440
+      size: 336
+    - path: data/processed/y_train.npy
+      hash: md5
+      md5: a7aaeaf59086170f595e28886f33d3f4
+      size: 928
+    - path: models/preprocessor.joblib
+      hash: md5
+      md5: 561c5bb057d17f221760c4a8dc670c70
+      size: 4115
+  train:
+    cmd: python src/models/train.py
+    deps:
+    - path: data/processed/X_test.npy
+      hash: md5
+      md5: 3470762f4499feeaae0bccb89cf132e8
+      size: 2832
+    - path: data/processed/X_train.npy
+      hash: md5
+      md5: 4030a7eef8bd47b35df08ac9bd6aac89
+      size: 10528
+    - path: data/processed/y_test.npy
+      hash: md5
+      md5: 4980048df707ecfeac23c7449ddbb440
+      size: 336
+    - path: data/processed/y_train.npy
+      hash: md5
+      md5: a7aaeaf59086170f595e28886f33d3f4
+      size: 928
+    - path: src/models/train.py
+      hash: md5
+      md5: ca693c67102d552b4cfdc44c1b263252
+      size: 1769
+    outs:
+    - path: metrics.json
+      hash: md5
+      md5: b963a881466b7ed74826e006af2c4dae
+      size: 107
+    - path: models/model.pkl
+      hash: md5
+      md5: 5c48caa7c698c58e04907731dda0b646
+      size: 299337
