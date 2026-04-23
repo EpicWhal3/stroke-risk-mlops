@@ -1,4 +1,4 @@
 [core]
     remote = myremote
 ['remote "myremote"']
-    url = https://dagshub.com/EpicWhal3/stroke-risk-mlops
+    url = https://dagshub.com/EpicWhal3/stroke-risk-mlops.dvc
