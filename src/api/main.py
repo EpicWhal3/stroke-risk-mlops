@@ -5,8 +5,16 @@ from pydantic import BaseModel, Field
 
 app = FastAPI(title="Stroke Risk API", version="1.0.0")
 
-model = joblib.load("models/model.pkl")
-preprocessor = joblib.load("models/preprocessor.joblib")
+model = None
+preprocessor = None
+
+
+def load_artifacts():
+    global model, preprocessor
+    if model is None:
+        model = joblib.load("models/model.pkl")
+    if preprocessor is None:
+        preprocessor = joblib.load("models/preprocessor.joblib")
 
 
 class Patient(BaseModel):
@@ -31,6 +39,7 @@ def health():
 
 @app.post("/predict")
 def predict(patient: Patient):
+    load_artifacts()
     df = pd.DataFrame([patient.model_dump()])
     X = preprocessor.transform(df)
     prob = float(model.predict_proba(X)[0, 1])
