@@ -1,0 +1,9 @@
+dataset:
+  kaggle_name: "imaadmahmood/stroke-risk-synthetic-2025"
+  raw_dir: "data/raw"
+  raw_filename: "stroke_dataset.csv"
+  target: "stroke"
+
+split:
+  test_size: 0.2
+  random_state: 42

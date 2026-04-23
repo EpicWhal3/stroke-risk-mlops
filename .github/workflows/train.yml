@@ -1,11 +1,16 @@
-name: CI
+name: Train Pipeline
 
 on:
   push:
-  pull_request:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "configs/**"
+      - "dvc.yaml"
+      - "requirements.txt"
 
 jobs:
-  test:
+  train:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,11 +26,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Lint
+      - name: Run DVC pipeline
         run: |
-          ruff check src tests
-          black --check src tests
-
-      - name: Run tests
-        run: |
-          pytest tests/ --cov=src --cov-report=xml
+          dvc repro

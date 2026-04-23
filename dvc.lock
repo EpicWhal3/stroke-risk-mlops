@@ -64,3 +64,19 @@ stages:
       hash: md5
       md5: 5c48caa7c698c58e04907731dda0b646
       size: 299337
+  download:
+    cmd: python src/data/load.py
+    deps:
+    - path: configs/data.yaml
+      hash: md5
+      md5: 1b165016bae259c41894c4ce6a0661ff
+      size: 197
+    - path: src/data/load.py
+      hash: md5
+      md5: 35c222676a36ba645ee6b21c123162f9
+      size: 1242
+    outs:
+    - path: data/raw/stroke_dataset.csv
+      hash: md5
+      md5: cd1e273722909fe70ab351966c10a639
+      size: 8133

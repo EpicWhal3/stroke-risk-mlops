@@ -5,4 +5,9 @@ mlruns/
 !.dvc
 *.csv
 *.db
-models/
+models/*.pkl
+models/*.joblib
+data/raw/
+data/processed/
+reports/
+metrics.json

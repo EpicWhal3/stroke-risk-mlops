@@ -1,26 +1,38 @@
 stages:
+  download:
+    cmd: python src/data/load.py
+    deps:
+      - src/data/load.py
+      - configs/data.yaml
+    outs:
+      - data/raw/stroke_dataset.csv
+
   preprocess:
     cmd: python src/data/preprocess.py
     deps:
       - src/data/preprocess.py
+      - configs/data.yaml
       - data/raw/stroke_dataset.csv
     outs:
       - data/processed/X_train.npy
       - data/processed/X_test.npy
       - data/processed/y_train.npy
       - data/processed/y_test.npy
+      - data/processed/dataset_meta.json
       - models/preprocessor.joblib
 
   train:
     cmd: python src/models/train.py
     deps:
       - src/models/train.py
+      - configs/model.yaml
       - data/processed/X_train.npy
       - data/processed/X_test.npy
       - data/processed/y_train.npy
       - data/processed/y_test.npy
     outs:
       - models/model.pkl
+      - reports/classification_report.json
     metrics:
       - metrics.json:
           cache: false
