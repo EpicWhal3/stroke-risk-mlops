@@ -36,3 +36,12 @@ stages:
     metrics:
       - metrics.json:
           cache: false
+
+  monitor:
+    cmd: python src/monitoring/check_drift.py
+    deps:
+      - src/monitoring/check_drift.py
+      - configs/data.yaml
+      - data/raw/stroke_dataset.csv
+    outs:
+      - monitoring/drift_report.html
