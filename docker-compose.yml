@@ -1,0 +1,62 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./models:/app/models:ro
+      - ./configs:/app/configs:ro
+    environment:
+      - MODEL_PATH=/app/models/model.pkl
+      - PREPROCESSOR_PATH=/app/models/preprocessor.joblib
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - mlops-network
+    restart: unless-stopped
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.12.1
+    ports:
+      - "5000:5000"
+    command: >
+      mlflow server
+      --backend-store-uri sqlite:///mlflow/mlflow.db
+      --default-artifact-root /mlartifacts
+      --host 0.0.0.0
+      --port 5000
+    volumes:
+      - mlflow-data:/mlflow
+      - mlflow-artifacts:/mlartifacts
+    networks:
+      - mlops-network
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: mlflow
+      POSTGRES_USER: mlflow
+      POSTGRES_PASSWORD: mlflow_pass
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mlflow -d mlflow"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - mlops-network
+    restart: unless-stopped
+
+volumes:
+  mlflow-data:
+  mlflow-artifacts:
+  postgres-data:
+
+networks:
+  mlops-network:
+    driver: bridge
