@@ -23,19 +23,22 @@ def main():
 
     cols_to_drop = ["id", "stroke"]
     reference_data = reference_data.drop(
-        columns=[c for c in cols_to_drop if c in reference_data.columns]
+        columns=[c for c in cols_to_drop if c in reference_data.columns],
+        errors="ignore",
     )
     current_data = current_data.drop(
-        columns=[c for c in cols_to_drop if c in current_data.columns]
+        columns=[c for c in cols_to_drop if c in current_data.columns], errors="ignore"
     )
 
-    print("🔍 Checking for data drift...")
+    print("Checking for data drift...")
 
     report = Report(metrics=[DataDriftPreset()])
-    report.run(reference_data=reference_data, current_data=current_data)
+
+    my_eval = report.run(reference_data=reference_data, current_data=current_data)
 
     os.makedirs("monitoring", exist_ok=True)
-    report.save_html("monitoring/drift_report.html")
+
+    my_eval.save_html("monitoring/drift_report.html")
 
     print("Drift report saved to monitoring/drift_report.html")
 

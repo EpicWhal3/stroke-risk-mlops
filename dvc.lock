@@ -13,8 +13,8 @@ stages:
       size: 8133
     - path: src/data/preprocess.py
       hash: md5
-      md5: 87ff18304856efc0e0f49b7f59a21b9b
-      size: 3680
+      md5: 4191a5aa203481b0eb05e292df24eeeb
+      size: 3871
     outs:
     - path: data/processed/X_test.npy
       hash: md5
@@ -22,20 +22,20 @@ stages:
       size: 4288
     - path: data/processed/X_train.npy
       hash: md5
-      md5: 9ce8d7900dd6d57b18de08e07728b35d
-      size: 16128
+      md5: d181708f0d65d963c6b061a4aa5054c7
+      size: 22528
     - path: data/processed/dataset_meta.json
       hash: md5
-      md5: 348610b7837b425bf304de2324a8f903
-      size: 334
+      md5: aec37177e0a8607ba1950ae7579798d6
+      size: 360
     - path: data/processed/y_test.npy
       hash: md5
       md5: 4980048df707ecfeac23c7449ddbb440
       size: 336
     - path: data/processed/y_train.npy
       hash: md5
-      md5: a7aaeaf59086170f595e28886f33d3f4
-      size: 928
+      md5: f13abc4390328aab4232b65395433cdf
+      size: 1248
     - path: models/preprocessor.joblib
       hash: md5
       md5: 7b9b689401a9d16ef8172bd7b34547cf
@@ -53,16 +53,16 @@ stages:
       size: 4288
     - path: data/processed/X_train.npy
       hash: md5
-      md5: 9ce8d7900dd6d57b18de08e07728b35d
-      size: 16128
+      md5: d181708f0d65d963c6b061a4aa5054c7
+      size: 22528
     - path: data/processed/y_test.npy
       hash: md5
       md5: 4980048df707ecfeac23c7449ddbb440
       size: 336
     - path: data/processed/y_train.npy
       hash: md5
-      md5: a7aaeaf59086170f595e28886f33d3f4
-      size: 928
+      md5: f13abc4390328aab4232b65395433cdf
+      size: 1248
     - path: src/models/train.py
       hash: md5
       md5: 842ec3c6dbd7375a08631dc6bfa5cd1f
@@ -70,16 +70,16 @@ stages:
     outs:
     - path: metrics.json
       hash: md5
-      md5: 118a705905c32e70a146601f0ef4545e
-      size: 163
+      md5: b24de651c27dd196bc4e0091a8794beb
+      size: 146
     - path: models/model.pkl
       hash: md5
-      md5: ede7624dcf05f0a95116c7905ccc46dd
-      size: 565097
+      md5: a10238e2f9e3dd4a79209392b4b19632
+      size: 630857
     - path: reports/classification_report.json
       hash: md5
-      md5: cb6924f46ca1825b1f987a326fb9a995
-      size: 631
+      md5: 62a1f73a44decaf9e520c94217815a17
+      size: 614
   download:
     cmd: python src/data/load.py
     deps:
@@ -96,3 +96,23 @@ stages:
       hash: md5
       md5: cd1e273722909fe70ab351966c10a639
       size: 8133
+  monitor:
+    cmd: python src/monitoring/check_drift.py
+    deps:
+    - path: configs/data.yaml
+      hash: md5
+      md5: 1b165016bae259c41894c4ce6a0661ff
+      size: 197
+    - path: data/raw/stroke_dataset.csv
+      hash: md5
+      md5: cd1e273722909fe70ab351966c10a639
+      size: 8133
+    - path: src/monitoring/check_drift.py
+      hash: md5
+      md5: bfe77a07023c23f1ce0df69a293aacb6
+      size: 1298
+    outs:
+    - path: monitoring/drift_report.html
+      hash: md5
+      md5: 7600b12eab9255eccc4136360644537e
+      size: 3917178
