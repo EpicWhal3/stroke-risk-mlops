@@ -1,8 +1,6 @@
 .venv
-.dvc
 __pycache__
 mlruns/
-!.dvc
 *.csv
 *.db
 models/*.pkl
